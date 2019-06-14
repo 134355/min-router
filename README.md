@@ -4,22 +4,24 @@
 import MinRouter from './MinRouter'
 
 // 配置路由
+import MinRouter from './MinRouter'
+
+// 配置路由
 const router = new MinRouter({
-    // 首页
-    index: {
-        // 页面路径
-        path: 'pages/index/index',
-        // 以下是type选项：默认navigateTo
-        // switchTab：跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面
-        // reLaunch：关闭所有页面，打开到应用内的某个页面
-        // redirectTo：关闭当前页面，跳转到应用内的某个页面。但是不允许跳转到 tabbar 页面
-        // navigateTo：保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面
-        type: 'navigateTo'
-    },
-    // 我的
-    my: {
-        path: 'pages/my/index'
-    }
+	routes: [
+		{
+			// 页面路径
+      path: 'pages/index/index',
+      // type必须是以下的值['navigateTo', 'switchTab', 'reLaunch', 'redirectTo']
+      // 跳转方式(默认跳转方式)
+			type: 'navigateTo',
+			name: 'index'
+		},
+		{
+			path: 'pages/my/index',
+			name: 'my'
+		}
+	] 
 })
 
 export default router
