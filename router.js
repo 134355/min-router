@@ -14,8 +14,20 @@ const router = new MinRouter({
 		{
 			path: 'pages/my/index',
 			name: 'my'
+		},
+		{
+			path: 'pages/test/index',
+			name: 'test'
 		}
 	] 
+})
+router.beforeEach((to, from, next) => {
+	if (from === 'pages/index/index' && to === 'pages/my/index') {
+		// 不希望跳转就传false
+		next(false)
+		// 跳到指定页面
+		// next('pages/test/index')
+	}
 })
 
 export default router

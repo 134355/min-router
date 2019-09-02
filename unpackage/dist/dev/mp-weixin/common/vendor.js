@@ -1,14 +1,15 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
 
-/***/ "../../../testdemo/MinRouter.js":
-/*!****************************************************!*\
-  !*** C:/Users/admin/Desktop/testdemo/MinRouter.js ***!
-  \****************************************************/
+/***/ "../../../../../Desktop/min-router/MinRouter.js":
+/*!******************************************************!*\
+  !*** C:/Users/13435/Desktop/min-router/MinRouter.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var toString = Object.prototype.toString;
+var before;
 
 function isObject(value) {
   return toString.call(value) === '[object Object]';
@@ -58,12 +59,44 @@ function openPage(args) {
   }
 
   return new Promise(function (resolve, reject) {
-    uni[type]({
-      url: "/".concat(path, "?query=").concat(queryStr),
-      success: resolve,
-      fail: reject });
+    var routers = getCurrentPages();
+    var route = null;
+    if (routers.length !== 0) {
+      var router = routers[routers.length - 1];
+      route = router.route;
+    }
+    var flag = true;
+    function next(name) {
+      switch (true) {
+        case name === undefined:
+          break;
+        case name === false:
+          flag = false;
+          break;
+        case isString(name):
+          flag = false;
+          uni[type]({
+            url: "/".concat(name),
+            success: resolve,
+            fail: reject });
 
+          break;}
+
+    }
+    before(path, route, next);
+    if (flag) {
+      uni[type]({
+        url: "/".concat(path, "?query=").concat(queryStr),
+        success: resolve,
+        fail: reject });
+
+    }
   });
+}
+
+
+function beforeEach(callback) {
+  before = callback;
 }
 
 function parseURL() {
@@ -111,29 +144,30 @@ function MinRouter(options) {
 
 MinRouter.install = install;
 MinRouter.prototype.openPage = openPage;
-MinRouter.prototype.parseURL = parseURL;var _default =
+MinRouter.prototype.parseURL = parseURL;
+MinRouter.prototype.beforeEach = beforeEach;var _default =
 
 MinRouter;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
-/***/ "../../../testdemo/main.js":
-/*!***********************************************!*\
-  !*** C:/Users/admin/Desktop/testdemo/main.js ***!
-  \***********************************************/
+/***/ "../../../../../Desktop/min-router/main.js":
+/*!*************************************************!*\
+  !*** C:/Users/13435/Desktop/min-router/main.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ "../../../testdemo/pages.json");
+/* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ "../../../../../Desktop/min-router/pages.json");
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ "../../../testdemo/App.vue"));
+var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ "../../../../../Desktop/min-router/App.vue"));
 
 
-var _MinRouter = _interopRequireDefault(__webpack_require__(/*! ./MinRouter */ "../../../testdemo/MinRouter.js"));
+var _MinRouter = _interopRequireDefault(__webpack_require__(/*! ./MinRouter */ "../../../../../Desktop/min-router/MinRouter.js"));
 
-var _router = _interopRequireDefault(__webpack_require__(/*! ./router */ "../../../testdemo/router.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var mina = function mina() {return __webpack_require__.e(/*! import() | components/min-a */ "components/min-a").then(__webpack_require__.bind(null, /*! ./components/min-a.vue */ "../../../testdemo/components/min-a.vue"));};
+var _router = _interopRequireDefault(__webpack_require__(/*! ./router */ "../../../../../Desktop/min-router/router.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var mina = function mina() {return __webpack_require__.e(/*! import() | components/min-a */ "components/min-a").then(__webpack_require__.bind(null, /*! ./components/min-a.vue */ "../../../../../Desktop/min-router/components/min-a.vue"));};
 
 
 _vue.default.config.productionTip = false;
@@ -154,44 +188,61 @@ createApp(app).$mount();
 
 /***/ }),
 
-/***/ "../../../testdemo/main.js?{\"page\":\"pages%2Findex%2Findex\"}":
-/*!********************************************************************************!*\
-  !*** C:/Users/admin/Desktop/testdemo/main.js?{"page":"pages%2Findex%2Findex"} ***!
-  \********************************************************************************/
+/***/ "../../../../../Desktop/min-router/main.js?{\"page\":\"pages%2Findex%2Findex\"}":
+/*!**********************************************************************************!*\
+  !*** C:/Users/13435/Desktop/min-router/main.js?{"page":"pages%2Findex%2Findex"} ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../testdemo/pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../Desktop/min-router/pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/index/index.vue */ "../../../testdemo/pages/index/index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/index/index.vue */ "../../../../../Desktop/min-router/pages/index/index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "../../../testdemo/main.js?{\"page\":\"pages%2Fmy%2Findex\"}":
-/*!*****************************************************************************!*\
-  !*** C:/Users/admin/Desktop/testdemo/main.js?{"page":"pages%2Fmy%2Findex"} ***!
-  \*****************************************************************************/
+/***/ "../../../../../Desktop/min-router/main.js?{\"page\":\"pages%2Fmy%2Findex\"}":
+/*!*******************************************************************************!*\
+  !*** C:/Users/13435/Desktop/min-router/main.js?{"page":"pages%2Fmy%2Findex"} ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../testdemo/pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../Desktop/min-router/pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/my/index.vue */ "../../../testdemo/pages/my/index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/my/index.vue */ "../../../../../Desktop/min-router/pages/my/index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "../../../testdemo/pages.json":
-/*!**************************************************!*\
-  !*** C:/Users/admin/Desktop/testdemo/pages.json ***!
-  \**************************************************/
+/***/ "../../../../../Desktop/min-router/main.js?{\"page\":\"pages%2Ftest%2Findex\"}":
+/*!*********************************************************************************!*\
+  !*** C:/Users/13435/Desktop/min-router/main.js?{"page":"pages%2Ftest%2Findex"} ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../Desktop/min-router/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/test/index.vue */ "../../../../../Desktop/min-router/pages/test/index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_index.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "../../../../../Desktop/min-router/pages.json":
+/*!****************************************************!*\
+  !*** C:/Users/13435/Desktop/min-router/pages.json ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -200,15 +251,15 @@ createPage(_index.default);
 
 /***/ }),
 
-/***/ "../../../testdemo/router.js":
-/*!*************************************************!*\
-  !*** C:/Users/admin/Desktop/testdemo/router.js ***!
-  \*************************************************/
+/***/ "../../../../../Desktop/min-router/router.js":
+/*!***************************************************!*\
+  !*** C:/Users/13435/Desktop/min-router/router.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _MinRouter = _interopRequireDefault(__webpack_require__(/*! ./MinRouter */ "../../../testdemo/MinRouter.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _MinRouter = _interopRequireDefault(__webpack_require__(/*! ./MinRouter */ "../../../../../Desktop/min-router/MinRouter.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // 配置路由
 var router = new _MinRouter.default({
@@ -223,10 +274,22 @@ var router = new _MinRouter.default({
 
   {
     path: 'pages/my/index',
-    name: 'my' }] });var _default =
+    name: 'my' },
+
+  {
+    path: 'pages/test/index',
+    name: 'test' }] });
 
 
 
+router.beforeEach(function (to, from, next) {
+  if (from === 'pages/index/index' && to === 'pages/my/index') {
+    // 不希望跳转就传false
+    next(false);
+    // 跳到指定页面
+    // next('pages/test/index')
+  }
+});var _default =
 
 router;exports.default = _default;
 
@@ -282,7 +345,7 @@ var camelize = cached(function (str) {
   return str.replace(camelizeRE, function (_, c) {return c ? c.toUpperCase() : '';});
 });
 
-var SYNC_API_RE = /subNVue|requireNativePlugin|upx2px|hideKeyboard|canIUse|^create|Sync$|Manager$/;
+var SYNC_API_RE = /requireNativePlugin|upx2px|hideKeyboard|canIUse|^create|Sync$|Manager$/;
 
 var CONTEXT_API_RE = /^create|Manager$/;
 
@@ -386,45 +449,7 @@ function upx2px(number, newDeviceWidth) {
   return number < 0 ? -result : result;
 }
 
-var previewImage = {
-  args: function args(fromArgs) {
-    var currentIndex = parseInt(fromArgs.current);
-    if (isNaN(currentIndex)) {
-      return;
-    }
-    var urls = fromArgs.urls;
-    if (!Array.isArray(urls)) {
-      return;
-    }
-    var len = urls.length;
-    if (!len) {
-      return;
-    }
-    if (currentIndex < 0) {
-      currentIndex = 0;
-    } else if (currentIndex >= len) {
-      currentIndex = len - 1;
-    }
-    if (currentIndex > 0) {
-      fromArgs.current = urls[currentIndex];
-      fromArgs.urls = urls.filter(
-      function (item, index) {return index < currentIndex ? item !== urls[currentIndex] : true;});
-
-    } else {
-      fromArgs.current = urls[0];
-    }
-    return {
-      indicator: false,
-      loop: false };
-
-  } };
-
-
-var protocols = {
-  previewImage: previewImage };
-
-var todos = [];
-var canIUses = [];
+var protocols = {};
 
 var CALLBACKS = ['success', 'fail', 'cancel', 'complete'];
 
@@ -589,7 +614,8 @@ function initTriggerEvent(mpInstance) {
   };
 }
 
-function initHook(name, options) {
+Page = function Page() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var name = 'onLoad';
   var oldHook = options[name];
   if (!oldHook) {
     options[name] = function () {
@@ -601,53 +627,22 @@ function initHook(name, options) {
       return oldHook.apply(this, args);
     };
   }
-}
-
-Page = function Page() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  initHook('onLoad', options);
   return MPPage(options);
 };
 
+var behavior = Behavior({
+  created: function created() {
+    initTriggerEvent(this);
+  } });
+
+
 Component = function Component() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  initHook('created', options);
+  (options.behaviors || (options.behaviors = [])).unshift(behavior);
   return MPComponent(options);
 };
 
 var mocks = ['__route__', '__wxExparserNodeId__', '__wxWebviewId__'];
 
-function initPage(pageOptions) {
-  return initComponent(pageOptions);
-}
-
-function initComponent(componentOptions) {
-  return Component(componentOptions);
-}
-
-function initBehavior(options) {
-  return Behavior(options);
-}
-function initRefs(vm) {
-  var mpInstance = vm.$scope;
-  Object.defineProperty(vm, '$refs', {
-    get: function get() {
-      var $refs = {};
-      var components = mpInstance.selectAllComponents('.vue-ref');
-      components.forEach(function (component) {
-        var ref = component.dataset.ref;
-        $refs[ref] = component.$vm || component;
-      });
-      var forComponents = mpInstance.selectAllComponents('.vue-ref-in-for');
-      forComponents.forEach(function (component) {
-        var ref = component.dataset.ref;
-        if (!$refs[ref]) {
-          $refs[ref] = [];
-        }
-        $refs[ref].push(component.$vm || component);
-      });
-      return $refs;
-    } });
-
-}
 function triggerLink(mpInstance, vueOptions) {
   mpInstance.triggerEvent('__l', mpInstance.$vm || vueOptions, {
     bubbles: true,
@@ -670,9 +665,9 @@ function handleLink(event) {
   }
 }
 
-function initMocks(vm, mocks$$1) {
+function initMocks(vm, mocks) {
   var mpInstance = vm.$mp[vm.mpType];
-  mocks$$1.forEach(function (mock) {
+  mocks.forEach(function (mock) {
     if (hasOwn(mpInstance, mock)) {
       vm[mock] = mpInstance[mock];
     }
@@ -757,7 +752,7 @@ function getBehaviors(vueOptions) {
   }
   if (isPlainObject(vueExtends) && vueExtends.props) {
     behaviors.push(
-    initBehavior({
+    Behavior({
       properties: getProperties(vueExtends.props, true) }));
 
 
@@ -766,7 +761,7 @@ function getBehaviors(vueOptions) {
     vueMixins.forEach(function (vueMixin) {
       if (isPlainObject(vueMixin) && vueMixin.props) {
         behaviors.push(
-        initBehavior({
+        Behavior({
           properties: getProperties(vueMixin.props, true) }));
 
 
@@ -1034,6 +1029,29 @@ function handleEvent(event) {var _this = this;
   });
 }
 
+function initRefs(vm) {
+  var mpInstance = vm.$mp[vm.mpType];
+  Object.defineProperty(vm, '$refs', {
+    get: function get() {
+      var $refs = {};
+      var components = mpInstance.selectAllComponents('.vue-ref');
+      components.forEach(function (component) {
+        var ref = component.dataset.ref;
+        $refs[ref] = component.$vm || component;
+      });
+      var forComponents = mpInstance.selectAllComponents('.vue-ref-in-for');
+      forComponents.forEach(function (component) {
+        var ref = component.dataset.ref;
+        if (!$refs[ref]) {
+          $refs[ref] = [];
+        }
+        $refs[ref].push(component.$vm || component);
+      });
+      return $refs;
+    } });
+
+}
+
 var hooks = [
 'onHide',
 'onError',
@@ -1059,27 +1077,24 @@ function initVm(vm) {
 }
 
 function createApp(vm) {
-
+  // 外部初始化时 Vue 还未初始化，放到 createApp 内部初始化 mixin
   _vue.default.mixin({
     beforeCreate: function beforeCreate() {
       if (!this.$options.mpType) {
         return;
       }
-
       this.mpType = this.$options.mpType;
-
       this.$mp = _defineProperty({
         data: {} },
       this.mpType, this.$options.mpInstance);
-
-
-      this.$scope = this.$options.mpInstance;
 
       delete this.$options.mpType;
       delete this.$options.mpInstance;
 
       if (this.mpType !== 'app') {
-        initRefs(this);
+        {// 头条的 selectComponent 竟然是异步的
+          initRefs(this);
+        }
         initMocks(this, mocks);
       }
     },
@@ -1190,7 +1205,7 @@ function createPage(vueOptions) {
 
   initHooks(pageOptions.methods, hooks$1);
 
-  return initPage(pageOptions, vueOptions);
+  return Component(pageOptions);
 }
 
 function initVm$2(VueComponent) {
@@ -1198,18 +1213,16 @@ function initVm$2(VueComponent) {
     return;
   }
 
-  var properties = this.properties;
-
   var options = {
     mpType: 'component',
     mpInstance: this,
-    propsData: properties };
+    propsData: this.properties };
 
   // 初始化 vue 实例
   this.$vm = new VueComponent(options);
 
   // 处理$slots,$scopedSlots（暂不支持动态变化$slots）
-  var vueSlots = properties.vueSlots;
+  var vueSlots = this.properties.vueSlots;
   if (Array.isArray(vueSlots) && vueSlots.length) {
     var $slots = Object.create(null);
     vueSlots.forEach(function (slotName) {
@@ -1225,17 +1238,11 @@ function initVm$2(VueComponent) {
 function createComponent(vueOptions) {
   vueOptions = vueOptions.default || vueOptions;
 
-  var VueComponent;
-  if (isFn(vueOptions)) {
-    VueComponent = vueOptions; // TODO form-field props.name,props.value
-    vueOptions = VueComponent.extendOptions;
-  } else {
-    VueComponent = _vue.default.extend(vueOptions);
-  }
-
   var behaviors = getBehaviors(vueOptions);
 
   var properties = getProperties(vueOptions.props, false, vueOptions.__file);
+
+  var VueComponent = _vue.default.extend(vueOptions);
 
   var componentOptions = {
     options: {
@@ -1281,19 +1288,8 @@ function createComponent(vueOptions) {
 
 
 
-  return initComponent(componentOptions, vueOptions);
+  return Component(componentOptions);
 }
-
-todos.forEach(function (todoApi) {
-  protocols[todoApi] = false;
-});
-
-canIUses.forEach(function (canIUseApi) {
-  var apiName = protocols[canIUseApi] && protocols[canIUseApi].name ? protocols[canIUseApi].name : canIUseApi;
-  if (!wx.canIUse(apiName)) {
-    protocols[canIUseApi] = false;
-  }
-});
 
 var uni = {};
 
@@ -1984,8 +1980,8 @@ if (true) {
 
   formatComponentName = function (vm, includeFile) {
     {
-      if(vm.$scope && vm.$scope.is){
-        return vm.$scope.is
+      if(vm.$mp && vm.$mp[vm.mpType]){
+        return vm.$mp[vm.mpType].is
       }
     }
     if (vm.$root === vm) {
@@ -6792,7 +6788,7 @@ function type(obj) {
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
         if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
-            var mpInstance = vm.$scope;
+            var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
         }
@@ -6813,14 +6809,14 @@ function nextTick$1(vm, cb) {
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
         if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
-            var mpInstance = vm.$scope;
+            var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
         if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
-            var mpInstance$1 = vm.$scope;
+            var mpInstance$1 = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
         }
@@ -6879,7 +6875,7 @@ var patch = function(oldVnode, vnode) {
         return
     }
     if (this.mpType === 'page' || this.mpType === 'component') {
-        var mpInstance = this.$scope;
+        var mpInstance = this.$mp[this.mpType];
         var data = cloneWithData(this);
         data.__webviewId__ = mpInstance.data.__webviewId__;
         var mpData = Object.create(null);
@@ -7061,8 +7057,8 @@ function internalMixin(Vue) {
     var oldEmit = Vue.prototype.$emit;
 
     Vue.prototype.$emit = function(event) {
-        if (this.$scope && event) {
-            this.$scope['triggerEvent'](event, {
+        if (this.$mp && event) {
+            this.$mp[this.mpType]['triggerEvent'](event, {
                 __args__: toArray(arguments, 1)
             });
         }
@@ -7075,8 +7071,8 @@ function internalMixin(Vue) {
 
     MP_METHODS.forEach(function (method) {
         Vue.prototype[method] = function(args) {
-            if (this.$scope) {
-                return this.$scope[method](args)
+            if (this.$mp) {
+                return this.$mp[this.mpType][method](args)
             }
         };
     });
@@ -7166,7 +7162,6 @@ var LIFECYCLE_HOOKS$1 = [
     'onReachBottom',
     'onTabItemTap',
     'onShareAppMessage',
-    'onResize',
     'onPageScroll',
     'onNavigationBarButtonTap',
     'onBackPress',
@@ -7174,7 +7169,7 @@ var LIFECYCLE_HOOKS$1 = [
     'onNavigationBarSearchInputConfirmed',
     'onNavigationBarSearchInputClicked',
     //Component
-    // 'onReady', // 兼容旧版本，应该移除该事件
+    'onReady', // 兼容旧版本，应该移除该事件
     'onPageShow',
     'onPageHide',
     'onPageResize'

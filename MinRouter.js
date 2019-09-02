@@ -1,4 +1,5 @@
 const toString = Object.prototype.toString
+let before
 
 function isObject (value) {
 	return toString.call(value) === '[object Object]'
@@ -48,12 +49,44 @@ function openPage (args) {
 	}
 
 	return new Promise((resolve, reject) => {
-		uni[type]({
-			url: `/${path}?query=${queryStr}`,
-			success: resolve,
-			fail: reject
-		})
+		let routers = getCurrentPages()
+		let route = null
+		if (routers.length !== 0) {
+			let router = routers[routers.length - 1]
+			route = router.route
+		}
+		let flag = true
+		function next (name) {
+			switch (true) {
+				case name === undefined:
+					break
+				case name === false:
+					flag = false
+					break
+				case isString(name):
+					flag = false
+					uni[type]({
+						url: `/${name}`,
+						success: resolve,
+						fail: reject
+					})
+					break
+			}
+		}
+		before(path, route, next)
+		if (flag) {
+			uni[type]({
+				url: `/${path}?query=${queryStr}`,
+				success: resolve,
+				fail: reject
+			})
+		}
 	})
+}
+
+
+function beforeEach (callback) {
+	before = callback
 }
 
 function parseURL () {
@@ -102,5 +135,6 @@ function MinRouter (options) {
 MinRouter.install = install
 MinRouter.prototype.openPage = openPage
 MinRouter.prototype.parseURL = parseURL
+MinRouter.prototype.beforeEach = beforeEach
 
 export default MinRouter

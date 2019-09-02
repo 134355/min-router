@@ -11,6 +11,12 @@
 			"style": {
 				"navigationBarTitleText": "my"
 			}
+		},
+		{
+			"path": "pages/test/index",
+			"style": {
+				"navigationBarTitleText": "test"
+			}
 		}
 	],
 	"globalStyle": {
