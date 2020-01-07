@@ -1,161 +1,51 @@
-创建router.js文件
+## Router使用方式
 
-```
-import MinRouter from './MinRouter'
+在页面添加 `navigate`类型是 `Array` 对应值是：`['navigateTo', 'switchTab', 'reLaunch', 'redirectTo']`
 
-// 配置路由
-import MinRouter from './MinRouter'
+用法
 
-// 配置路由
-const router = new MinRouter({
-	routes: [
-		{
-			// 页面路径
-      path: 'pages/index/index',
-      // type必须是以下的值['navigateTo', 'switchTab', 'reLaunch', 'redirectTo']
-      // 跳转方式(默认跳转方式)
-			type: 'navigateTo',
-			name: 'index'
-		},
-		{
-			path: 'pages/my/index',
-			name: 'my'
-		}
-	] 
-})
+```js
+// 文件目录 pages/home/index.vue
 
-export default router
-```
 
-在main.js文件
-
-```
-import Vue from 'vue'
-import App from './App'
-
-// 引入MinRouter文件
-import MinRouter from './MinRouter'
-// 引入router文件
-import minRouter from './router'
-
-Vue.config.productionTip = false
-
-// 注册插件
-Vue.use(MinRouter)
-
-App.mpType = 'app'
-
-const app = new Vue({
-    ...App,
-    minRouter
-})
-app.$mount()
-```
-
-创建min-a组件
-
-```
-<template>
-  <div @click="openPage">
-    <slot></slot>
-  </div>
-</template>
-
-<script>
 export default {
-  props: {
-    to: {
-      type: [Object, String],
-      required: true
-    }
-  },
-  methods: {
-    openPage () {
-      this.$openPage(this.to)
-    }
-  }
+  navigate: ['navigateTo']
 }
-</script>
-```
+// 会生成 navigateTo 跳转的方式
+// 会生成 name 值为 所在文件夹的名称(home)
 
-在main文件添加如下代码
+export default {
+  navigate: ['navigateTo', 'switchTab']
+}
+// 会生成navigateTo、switchTab跳转的方式
+// 会生成两条数据
+// navigateTo 对应 name 值为 所在文件夹的名称(home)
+// switchTab 对应 name 值为 所在文件夹的名称(swhome)
 
-```
-import mina from './components/min-a.vue'
-Vue.component('min-a', mina)
-```
-
-具体用法
-
-```
-<template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-		<button @click="toPage">跳转到我的页面</button>
-		<min-a to="my">跳转到我的页面min-a标签跳转</min-a>
-		<min-a :to="{name: 'my', query: {id: 123}}">跳转到我的页面min-a标签跳转带参数</min-a>
-	</view>
-</template>
-
-<script>
-	export default {
-		data() {
-			return {
-				title: 'index'
-			}
-		},
-		onLoad() {
-			// 解析路由参数
-			console.log(this.$parseURL())
-		},
-		methods: {
-			toPage () {
-				// 跳到my的页面  query是传递的参数
-				this.$openPage({
-					name: 'my',
-					query: {id: 123}
-				})
-			}
-		}
-	}
-</script>
-```
-
-
+// 其他方式对应值
+// reLaunch 对应 name 值为 所在文件夹的名称(relhome)
+// redirectTo 对应 name 值为 所在文件夹的名称(redhome)
 
 ```
-<template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-		<button @click="toPage">跳转到首页页面</button>
-	</view>
-</template>
 
-<script>
-	export default {
-		data() {
-			return {
-				title: 'my'
-			}
-		},
-		onLoad() {
-			// 解析路由参数
-			console.log(this.$parseURL())
-		},
-		methods: {
-			toPage () {
-				// 跳到index的页面
-				// 不传参数可以简写成如下
-				this.$openPage('index')
-			}
-		}
-	}
-</script>
+```js
+this.$minRouter.push({
+	// 这里的 name 对应上面生成的 name 值
+    name: 'home',
+    // params 是页面传参类型最好是 Object
+    params: { id: 1 }
+})
+
+
+// 不传参时可以直接如下写法
+this.$minRouter.push('swhome')
+
+
+// 获取页面参数
+this.$parseURL()
+
 ```
 
+项目中文件目录 `router/index.js` 
+
+可以设置路由拦截用法和 `Vue` 全局前置钩子类似
